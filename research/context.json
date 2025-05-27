@@ -1,0 +1,103 @@
+[
+    {
+        "table_name": "freelancers"
+    },
+    {
+        "Freelancer_ID": "Unique identifier for each freelancer record ",
+        "Job_Category": "Primary classification of freelance work performed",
+        "Platform": "Freelance marketplace where work was performed",
+        "Experience_Level": "Freelancer's professional experience tier",
+        "Client_Region": " Geographical location of the client ",
+        "Payment_Method": "Method used for financial transactions",
+        "Job_Completed": "Number of projects successfully completed",
+        "Earnings_USD": "Total earnings in US Dollars",
+        "Hourly_Rate ": "Freelancer's hourly compensation rate in USD",
+        "Job_Success_Rate": "Percentage of successful job completions",
+        "Client_Rating": "Average rating given by clients (1.0-5.0 scale)",
+        "Job_Duration_Days": "Average project timeline in days",
+        "Project_Type": "Classification of work arrangement",
+        "Rehire_Rate": "Percentage of clients who rehire the freelancer",
+        "Marketing_Spend": "Amount invested in platform promotion in USD"
+    },
+    {
+        "job_category": [
+            "Web Development",
+            "App Development",
+            "Data Entry",
+            "Digital Marketing",
+            "Customer Support",
+            "Content Writing",
+            "Graphic Design",
+            "SEO"
+        ],
+        "platform": [
+            "Fiverr",
+            "PeoplePerHour",
+            "Upwork",
+            "Toptal",
+            "Freelancer"
+        ],
+        "experience_level": [
+            "Beginner",
+            "Intermediate",
+            "Expert"
+        ],
+        "client_region": [
+            "Asia",
+            "Australia",
+            "UK",
+            "Europe",
+            "USA",
+            "Middle East",
+            "Canada"
+        ],
+        "payment_method": [
+            "Mobile Banking",
+            "Crypto",
+            "Bank Transfer",
+            "PayPal"
+        ],
+        "project_type": [
+            "Fixed",
+            "Hourly"
+        ]
+    },
+    {
+        "freelancer_id": {
+            "min": 1,
+            "max": 1950
+        },
+        "job_completed": {
+            "min": 5,
+            "max": 299
+        },
+        "earnings_usd": {
+            "min": 51,
+            "max": 9991
+        },
+        "hourly_rate": {
+            "min": 5,
+            "max": 99
+        },
+        "job_success_rate": {
+            "min": 50,
+            "max": 99
+        },
+        "client_rating": {
+            "min": 3,
+            "max": 5
+        },
+        "job_duration_days": {
+            "min": 1,
+            "max": 89
+        },
+        "rehire_rate": {
+            "min": 10,
+            "max": 79
+        },
+        "marketing_spend": {
+            "min": 0,
+            "max": 499
+        }
+    }
+]

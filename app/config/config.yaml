@@ -1,1 +1,13 @@
 version: 1.0
+
+LLM_model:
+    model: "qwen/qwen3-30b-a3b:free"
+    url: "https://openrouter.ai/api/v1"
+    api_key: "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"
+
+database:
+    user: user
+    password: passw
+    database: db
+    host: "127.0.0.1"
+    port: 5440

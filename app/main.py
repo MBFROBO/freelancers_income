@@ -3,18 +3,13 @@ import database
 import model
 
 import sys, os
-import queue, yaml
+import queue
 import signal, asyncio
 
-from yaml import load
-
-confs = {}
-with open(f"{sys.path[0]}/config/config.yaml", 'r') as f:
-    confs = load(f, yaml.Loader)
+from config import config
 
 
 async def async_input(pid):
-    
     prompt = input("Ваш промпт: ")
     if prompt == 'exit':
         os.kill(pid, signal.SIGKILL)
@@ -27,7 +22,7 @@ async def main(pid, q):
  
 
 if __name__ == "__main__":
-    print(f"app version: {confs['version']} | Для выхода введите exit ")
+    print(f"app version: {config.VERSION} | Для выхода введите exit ")
     q = queue.Queue()
     pid = os.getpid()
 

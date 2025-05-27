@@ -1,0 +1,31 @@
+services:
+    database:
+        image: postgres:latest
+        environment:
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: passw
+            POSTGRES_DB: db
+        ports:
+            - "5440:5432"
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        networks:
+            - net
+    
+    adminer:
+        image: adminer:latest
+        ports:
+            - "8080:8080"
+        depends_on:
+            - database
+        networks:
+            - net
+        
+volumes:
+    db_data:
+        driver: local
+
+networks:
+    net:
+        driver: bridge
+
