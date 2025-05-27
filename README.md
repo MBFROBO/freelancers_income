@@ -56,33 +56,36 @@ print(response_message )
 The meaning of life is a deeply personal and multifaceted concept that varies across individuals, cultures, and philosophical traditions. Here's a structured synthesis of the exploration:
 
 1. **Philosophical Perspectives**:
-   
+
    - **Existentialism**: Life has no inherent meaning; individuals must create their own purpose through choices and actions (e.g., Sartre, Camus).
    - **Absurdism**: Embraces the conflict between seeking meaning and an indifferent universe, finding joy in the struggle itself (Camus).
 2. **Religious/Spiritual Views**:
-   
+
    - **Theistic Religions**: Purpose often involves serving a divine being, achieving salvation, or enlightenment (e.g., Christianity, Buddhism).
    - **Eastern Philosophies**: Focus on ending suffering (Buddhism) or harmonizing with the universe (Taoism).
 3. **Scientific Angle**:
-   
+
    - **Biology**: Survival, reproduction, and genetic continuity, though humans seek fulfillment beyond these basics.
    - **Cosmology**: Some explore meaning through the universe's origins, though science typically addresses "how" rather than "why."
 4. **Psychological Insights**:
-   
+
    - **Maslow's Hierarchy**: Progressing from basic needs to self-actualization and transcendence.
    - **Positive Psychology**: Emphasizes well-being, relationships, and personal growth as sources of meaning.
 5. **Cultural Influences**:
-   
+
    - **Collectivist vs. Individualist**: Community vs. personal achievement; cultural values shape perceived purposes.
 6. **Subjective vs. Objective Meaning**:
-   
+
    - **Subjective**: Personal fulfillment, relationships, creativity, or legacy.
    - **Objective**: Hypothetical universal purpose (e.g., moral frameworks, divine plans), though debated.
 7. **Synthesis**:
-   
+
    - The search for meaning itself—through love, art, knowledge, or service—often becomes the journey that defines purpose. It may blend personal aspirations, connections, and contributions to a greater good.
 
 **Conclusion**: There is no singular answer. The meaning of life emerges from an individual's exploration of existence, shaped by their beliefs, experiences, and cultural context. It is a dynamic, evolving pursuit rather than a fixed destination.
+
+---
+
 Имея доступ к нейросети deepseek, распарсим таблицу данных на группы.
 
 ```python
@@ -94,22 +97,8 @@ with psycopg2.connect(
 df
 ```
 
-/tmp/ipykernel_20865/3059670997.py:5: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-df = pd.read_sql_query("Select * FROM freelancers", conn)
-
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-.dataframe tbody tr th {
-vertical-align: top;
-}
-
-.dataframe thead th {
-text-align: right;
-}
 </style>
 
 <table border="1" class="dataframe">
@@ -359,6 +348,9 @@ dtype='object'),
 Index(['job_category', 'platform', 'experience_level', 'client_region',
 'payment_method', 'project_type'],
 dtype='object'))
+
+---
+
 Из анализа датафрейма выше видно, что в текстовых колонках число уникальных данных мало (5 - 8).
 Можно вытянуть их отдельно для каждой колонки.
 
@@ -392,6 +384,9 @@ unique
 'Canada'],
 'payment_method': ['Mobile Banking', 'Crypto', 'Bank Transfer', 'PayPal'],
 'project_type': ['Fixed', 'Hourly']}
+
+---
+
 После получения вариаций значений для колонок, получим минмумы и максимумы по колонкам числовым
 Это даст нейросети больше понимания, в каких диапазонах и с какими данными она работает
 
@@ -416,9 +411,13 @@ diapazones
 'job_duration_days': {'min': 1, 'max': 89},
 'rehire_rate': {'min': 10, 'max': 79},
 'marketing_spend': {'min': 0, 'max': 499}}
+
+---
+
 Думаю, что к этим данным не помешает описание. Цейросети, как и человеку, нужен контекст, с которым она будет работать.
 
 ### Dataset Features
+
 
 | Column Name       | Description                                        | Data Type | Example Values                                        |
 | ----------------- | -------------------------------------------------- | --------- | ----------------------------------------------------- |
@@ -506,7 +505,10 @@ system_prompt
 
 {'role': 'system',
 'content': 'Ты - Аналитик данных и отлично знаешь PostgreSQL. Твоя задача - создать для пользователя оптмиальный SQL зпрос для СУБД PostgreSQL.\n    Таблица, с которой ты работаешь, содержит следующе данные:\n    [{\'table_name\': \'freelancers\'}, {\'Freelancer_ID\': \'Unique identifier for each freelancer record \', \'Job_Category\': \'Primary classification of freelance work performed\', \'Platform\': \'Freelance marketplace where work was performed\', \'Experience_Level\': "Freelancer\'s professional experience tier", \'Client_Region\': \' Geographical location of the client \', \'Payment_Method\': \'Method used for financial transactions\', \'Job_Completed\': \'Number of projects successfully completed\', \'Earnings_USD\': \'Total earnings in US Dollars\', \'Hourly_Rate \': "Freelancer\'s hourly compensation rate in USD", \'Job_Success_Rate\': \'Percentage of successful job completions\', \'Client_Rating\': \'Average rating given by clients (1.0-5.0 scale)\', \'Job_Duration_Days\': \'Average project timeline in days\', \'Project_Type\': \'Classification of work arrangement\', \'Rehire_Rate\': \'Percentage of clients who rehire the freelancer\', \'Marketing_Spend\': \'Amount invested in platform promotion in USD\'}, {\'job_category\': [\'Web Development\', \'App Development\', \'Data Entry\', \'Digital Marketing\', \'Customer Support\', \'Content Writing\', \'Graphic Design\', \'SEO\'], \'platform\': [\'Fiverr\', \'PeoplePerHour\', \'Upwork\', \'Toptal\', \'Freelancer\'], \'experience_level\': [\'Beginner\', \'Intermediate\', \'Expert\'], \'client_region\': [\'Asia\', \'Australia\', \'UK\', \'Europe\', \'USA\', \'Middle East\', \'Canada\'], \'payment_method\': [\'Mobile Banking\', \'Crypto\', \'Bank Transfer\', \'PayPal\'], \'project_type\': [\'Fixed\', \'Hourly\']}, {\'freelancer_id\': {\'min\': 1, \'max\': 1950}, \'job_completed\': {\'min\': 5, \'max\': 299}, \'earnings_usd\': {\'min\': 51, \'max\': 9991}, \'hourly_rate\': {\'min\': 5, \'max\': 99}, \'job_success_rate\': {\'min\': 50, \'max\': 99}, \'client_rating\': {\'min\': 3, \'max\': 5}, \'job_duration_days\': {\'min\': 1, \'max\': 89}, \'rehire_rate\': {\'min\': 10, \'max\': 79}, \'marketing_spend\': {\'min\': 0, \'max\': 499}}]\n\tНе придумывай данные, используй только приведённую структуру. Существующие имена таблиц и переменных.\n    На выход дай ТОЛЬКО SQL - запрос к таблице. Запрос выводи текстом без кавычек и без форматирования.\n\t'}
-Минимальный пул вопросов, на которые предстоит ответить
+
+---
+
+**Минимальный пул вопросов, на которые предстоит ответить**
 
 - Насколько выше доход у фрилансеров, принимающих оплату в криптовалюте, по сравнению с другими способами оплаты?
 - Как распределяется доход фрилансеров в зависимости от региона проживания?
@@ -535,6 +537,9 @@ AVG(CASE WHEN Payment_Method != 'Crypto' THEN Earnings_USD END) AS avg_non_crypt
 AVG(CASE WHEN Payment_Method = 'Crypto' THEN Earnings_USD END) - AVG(CASE WHEN Payment_Method != 'Crypto' THEN Earnings_USD END) AS earnings_difference
 FROM freelancers
 WHERE Payment_Method IS NOT NULL;
+
+---
+
 После получения запроса - распарсим его
 
 ```python
@@ -553,22 +558,6 @@ with psycopg2.connect(
 result
 ```
 
-/tmp/ipykernel_20865/4133764436.py:5: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-.dataframe tbody tr th {
-vertical-align: top;
-}
-
-.dataframe thead th {
-text-align: right;
-}
 </style>
 
 <table border="1" class="dataframe">
@@ -691,12 +680,8 @@ responses_df = pd.DataFrame(responses)
 responses_df
 ```
 
-/tmp/ipykernel_20865/907882974.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-/tmp/ipykernel_20865/907882974.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-
 <div>
+
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -811,30 +796,11 @@ for question in questions:
 responses_df = pd.DataFrame(responses)
 ```
 
-/tmp/ipykernel_20865/907882974.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-/tmp/ipykernel_20865/907882974.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-/tmp/ipykernel_20865/907882974.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-/tmp/ipykernel_20865/907882974.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-/tmp/ipykernel_20865/907882974.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-result = pd.read_sql_query(sql_query, conn)
-
-<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
 
-.dataframe tbody tr th {
-vertical-align: top;
-}
-
-.dataframe thead th {
-text-align: right;
-}
 </style>
 
 <table border="1" class="dataframe">
@@ -911,13 +877,6 @@ responses_df.loc[:, ['question', 'response']]
         vertical-align: middle;
     }
 
-.dataframe tbody tr th {
-vertical-align: top;
-}
-
-.dataframe thead th {
-text-align: right;
-}
 </style>
 
 <table border="1" class="dataframe">
@@ -1027,4 +986,3 @@ select AVG(job_duration_days) as avg_duration, project_type from freelancers gro
 - Нейросеть умеет в семантику, в случае с корреляцией. Правильно проставляет ранги Intermediate / Beginner / Expert
 - Ни в одном запросе нейросети не было допущено логических и синтаксических ошибок
 - Выводы, которая делает нейросеть - не всегда однозначны. Это поможет решить более точное регулирование температуры в сторону нуля или сделать запоминание контекста, благодаря которому, пользователь сможет задачать уточняющие запросы по данным
-
