@@ -3,7 +3,7 @@ version: 1.0
 LLM_model:
     model: "qwen/qwen3-30b-a3b:free"
     url: "https://openrouter.ai/api/v1"
-    api_key: "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"
+    api_key: "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"
 
 database:
     user: user
