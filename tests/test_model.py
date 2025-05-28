@@ -19,3 +19,10 @@ def test_model_connection():
     temperature = 0.7
     )
     assert completion.choices[0].message.content is not None, "Model connection failed or returned no content"
+
+
+def test_get_system_context():
+    from .app.model.context import Context
+    context = Context()
+    system_context = context.system_context_message
+    assert isinstance(system_context, dict), "System context should be a dictionary"
